@@ -2,13 +2,14 @@
 
 ## Overview
 
-Built the complete Next.js 14 frontend for Flow9 Personal Life OS.
+Built the complete Next.js 14 frontend for Flow9 Personal Life OS with full API integration.
 
 ## Tech Stack
 
 - **Framework**: Next.js 14 (App Router)
-- **Styling**: Tailwind CSS with dark theme (Teal #0D9488 + Zinc)
+- **Styling**: Tailwind CSS with dark theme (Zinc)
 - **Language**: TypeScript
+- **Icons**: Lucide React
 
 ## Project Structure
 
@@ -18,7 +19,7 @@ flow9-frontend/
 │   ├── app/
 │   │   ├── layout.tsx           # Root layout with AuthProvider
 │   │   ├── page.tsx            # Redirects to /login or /dashboard
-│   │   ├── login/page.tsx      # PIN login
+│   │   ├── login/page.tsx      # PIN login (6 digits)
 │   │   └── dashboard/
 │   │       ├── layout.tsx       # Sidebar navigation
 │   │       ├── page.tsx        # Dashboard overview
@@ -26,57 +27,122 @@ flow9-frontend/
 │   │       ├── payroll/page.tsx # Calendar + shifts
 │   │       ├── subscriptions/page.tsx
 │   │       └── settings/page.tsx
+│   ├── components/
+│   │   └── CategoryIcon.tsx    # Brand logos & category icons
 │   ├── lib/api.ts              # API client
 │   ├── hooks/useAuth.tsx       # Auth context
 │   ├── types/index.ts          # TypeScript types
 │   └── app/globals.css         # Tailwind + custom styles
+├── .env.local
 ├── package.json
+├── README.md
 └── tsconfig.json
 ```
 
-## Key Components
+## Features
 
-### Authentication
-- PIN-based login with numeric keypad
-- JWT token storage in localStorage
-- Auth context for global state management
+### 1. Login Page (`/login`)
+- 6-digit PIN keypad
+- Auto-login when PIN complete
+- First-time creates admin account
 
-### Dashboard Layout
-- Sidebar navigation with icons
-- Dark theme with Teal accents
-- Responsive design
+### 2. Dashboard (`/dashboard`)
+- Monthly stats: Payroll, Income, Expense, Net Flow
+- Savings rate with progress bar
+- Expense breakdown by category
+- 7-day activity chart
+- Comparison with last month
+- Subscriptions alert
+- Auto-refresh on focus
 
-### Pages
-1. **Login** - PIN entry with keypad UI
-2. **Dashboard** - Overview with metrics and charts
-3. **Ledger** - Transaction list with NLP quick input
-4. **Payroll** - Shift calendar and salary info
-5. **Subscriptions** - Recurring bills grid
-6. **Settings** - Change PIN functionality
+### 3. Ledger (`/dashboard/ledger`)
+- NLP quick input: `"Ăn trưa 50k"` or `"+ Lương 15tr"`
+- Filter by type: All / + Income / - Expense
+- Filter by category
+- Search transactions
+- Edit/Delete transactions
+- Stats: Income, Expense, Net Flow
+- Payment history
+
+### 4. Payroll (`/dashboard/payroll`)
+- Calendar view of shifts
+- Add/Edit/Delete shifts
+- Shift types: Day, Night, Holiday
+- Salary calculation by shift type
+- Monthly summary
+
+### 5. Subscriptions (`/dashboard/subscriptions`)
+- 100+ brand logos (Netflix, Spotify, YouTube, ChatGPT, etc.)
+- Quick link to service website
+- Payment history tracking
+- Mark as paid (auto-update next billing date)
+- Monthly/Yearly totals
+- Stats: Monthly Burn, Yearly Burn, Total Paid
+
+### 6. Settings (`/dashboard/settings`)
+- Change PIN (6 digits)
+- Export data to CSV
+- Import data from CSV
+- System information
+
+## Brand Logos
+
+Supports 100+ brands:
+- **Streaming**: Netflix, Spotify, YouTube, Disney+, HBO, etc.
+- **Gaming**: Xbox, PlayStation, Steam, Nintendo, EA Play
+- **Cloud**: Google Drive, iCloud, Dropbox, OneDrive
+- **AI**: ChatGPT, Claude, Gemini, Midjourney
+- **Software**: Adobe, Figma, Notion, Slack, Zoom
+- **Education**: Udemy, Coursera, MasterClass
+- **Hosting**: AWS, Vercel, Netlify, DigitalOcean
+- **Shopping**: Amazon, Shopee, Lazada
 
 ## API Integration
 
 - Centralized API client in `/src/lib/api.ts`
-- JWT authentication headers
+- JWT via httpOnly cookies
 - Type-safe API responses
+- Credentials included in requests
 
-## Design System
+## Environment Variables
 
-- **Primary Color**: Teal #0D9488
-- **Background**: Zinc dark (#09090b)
-- **Cards**: Zinc (#18181b)
-- **Text**: White/Gray
-- **Accent**: Teal for interactive elements
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+For production:
+```env
+NEXT_PUBLIC_API_URL=https://your-backend.railway.app
+```
 
 ## Commands
 
 ```bash
 cd flow9-frontend
-npm run dev   # Start development server on port 3000
+npm install      # Install dependencies
+npm run dev      # Start development server on port 3000
+npm run build    # Build production
+npm start        # Run production
+```
+
+## Deploy on Vercel
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+
+# Or use Vercel dashboard
+# 1. Import GitHub repo
+# 2. Set NEXT_PUBLIC_API_URL
+# 3. Deploy
 ```
 
 ## Notes
 
 - First-time login creates admin user with the PIN entered
 - Frontend runs on port 3000, backend on port 3001
-- Integration testing pending
+- PIN is 6 digits (changed from 4-6)
+- Auto-refresh dashboard when tab is focused

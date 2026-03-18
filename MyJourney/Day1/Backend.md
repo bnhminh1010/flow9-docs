@@ -26,38 +26,9 @@ Tạo 7 collections theo yêu cầu:
 | `categories` | Danh mục |
 | `audit_logs` | Lịch sử thay đổi |
 
-**Tài liệu**: `flow9-docs/DATABASE_DESIGN.md`
-
 ---
 
-### 2. Thiết kế Frontend UI
-
-Tạo design system dựa trên mẫu từ `design_test_2`:
-
-- **Color palette**: Teal (#0D9488) + Zinc dark theme
-- **Layout**: Sidebar 240px + Main content
-- **Components**: Cards, Charts, Forms, Quick Input
-- **Pages**: Login, Dashboard, Payroll, Subscriptions, Ledger
-
-**Tài liệu**: `flow9-docs/FRONTEND_DESIGN.md`
-
----
-
-### 3. Thiết kế Backend API
-
-Tạo API specification với:
-
-- 7 modules chính
-- 25+ endpoints
-- 3 core services (NLP Parser, Salary Calculator, Subscription Reminder)
-- 2 Cron Jobs (Subscription checker, Recurring transactions)
-- SSE cho real-time notifications
-
-**Tài liệu**: `flow9-docs/BACKEND_DESIGN.md`
-
----
-
-### 4. Code Backend (Express + TypeScript)
+### 2. Code Backend (Express + TypeScript)
 
 Cấu trúc project:
 
@@ -97,46 +68,61 @@ flow9-backend/
 
 ---
 
-### 5. Kết nối MongoDB Atlas
+### 3. API Endpoints
 
-- Sử dụng MongoDB Atlas với connection string SRV
-- Cấu hình trong `.env`:
-  ```
-  MONGODB_URI=mongodb+srv://pata10102004_db_user:Binhminh%401010@flow9.0tdh9i3.mongodb.net/?appName=flow9
-  ```
-
----
-
-### 6. API Endpoints đã tạo
-
-| Module | Method | Endpoint |
-|--------|--------|----------|
-| Auth | POST | `/api/auth/login` |
-| Auth | POST | `/api/auth/verify` |
-| Auth | POST | `/api/auth/change-pin` |
-| Shifts | GET/POST/PUT/DELETE | `/api/shifts` |
-| Salary | GET | `/api/salary/config`, `/api/salary/summary` |
-| Subscriptions | CRUD | `/api/subscriptions` |
-| Transactions | CRUD + Aggregate | `/api/transactions` |
-| Categories | GET/POST/DELETE | `/api/categories` |
-| Notifications | GET | `/api/notifications/stream` (SSE) |
-
----
-
-### 7. Core Services
-
-#### NLP Parser
-- Parse input như "Ăn trưa 50k" → `{ type: 'expense', amount: 50000, category: 'Ăn uống' }`
-- Hỗ trợ: k, tr, triệu
-- Tự động nhận diện danh mục
-
-#### Salary Calculator
-- Công thức: `hours × hourlyRate × shiftMultiplier × holidayMultiplier`
-- Tính tổng lương tháng theo loại ca
+| Module | Method | Endpoint | Mô tả |
+|--------|--------|----------|--------|
+| Auth | POST | `/api/auth/login` | Login với PIN 6 số |
+| Auth | POST | `/api/auth/verify` | Verify JWT token |
+| Auth | POST | `/api/auth/change-pin` | Đổi PIN |
+| Shifts | GET | `/api/shifts` | Lấy ca làm |
+| Shifts | POST | `/api/shifts` | Tạo ca làm |
+| Shifts | PUT | `/api/shifts/:id` | Cập nhật ca làm |
+| Shifts | DELETE | `/api/shifts/:id` | Xóa ca làm |
+| Salary | GET | `/api/salary/config` | Lấy cấu hình lương |
+| Salary | PUT | `/api/salary/config` | Cập nhật cấu hình lương |
+| Salary | GET | `/api/salary/summary` | Tổng lương tháng |
+| Subscriptions | GET | `/api/subscriptions` | Lấy subscriptions |
+| Subscriptions | GET | `/api/subscriptions/upcoming` | Subscriptions sắp đến hạn |
+| Subscriptions | POST | `/api/subscriptions` | Tạo subscription |
+| Subscriptions | PUT | `/api/subscriptions/:id` | Cập nhật subscription |
+| Subscriptions | POST | `/api/subscriptions/:id/pay` | Đánh dấu đã thanh toán |
+| Subscriptions | DELETE | `/api/subscriptions/:id` | Xóa subscription |
+| Transactions | GET | `/api/transactions` | Lấy giao dịch |
+| Transactions | POST | `/api/transactions` | Tạo giao dịch (NLP) |
+| Transactions | PUT | `/api/transactions/:id` | Cập nhật giao dịch |
+| Transactions | DELETE | `/api/transactions/:id` | Xóa giao dịch |
+| Transactions | GET | `/api/transactions/aggregate` | Thống kê chi tiêu |
+| Categories | GET | `/api/categories` | Lấy danh mục |
+| Categories | POST | `/api/categories` | Tạo danh mục |
+| Categories | DELETE | `/api/categories/:id` | Xóa danh mục |
+| Notifications | GET | `/api/notifications/stream` | SSE notification |
 
 ---
 
-### 8. Cron Jobs
+### 4. NLP Parser
+
+Parse input tự nhiên thành transaction:
+
+```
+# Chi tiêu (tự nhận diện)
+Ăn trưa 50k
+Mua sắm 200k
+Xăng 100k
+
+# Thu nhập (explicit)
++ Lương 15tr
++ Thưởng 2tr
+- Mua sắm 500k
+
+# Shorthand
+k = nghìn (50k = 50,000)
+tr = triệu (1.5tr = 1,500,000)
+```
+
+---
+
+### 5. Cron Jobs
 
 | Job | Schedule | Task |
 |-----|----------|------|
@@ -145,36 +131,21 @@ flow9-backend/
 
 ---
 
-## ✅ Kết quả
+## 🔧 Bug Fixes
 
-- Backend compile thành công
-- Server chạy trên port 3001
-- MongoDB Atlas kết nối thành công
-- Health check endpoint hoạt động: `GET /health`
+### 1. PIN Length - 6 digits
+- Thay đổi từ 4-6 digits → chỉ 6 digits
+- Cập nhật cả frontend và backend validation
 
----
-
-## 🔜 Ngày mai (Day 2)
-
-- Setup Frontend (Next.js)
-- Tích hợp Frontend với Backend API
-- Login page với PIN
-- Dashboard với charts
+### 2. ObjectId Aggregate Query
+- Fix vấn đề aggregate query không tìm thấy transactions
+- Chuyển đổi userId string sang ObjectId trong MongoDB aggregation pipeline
 
 ---
 
 ## 📁 Files đã tạo
 
 ```
-flow9-docs/
-├── PROJECT_BRIEF.md         # Yêu cầu dự án
-├── TECH_SPEC.md             # Tech stack, API
-├── DATABASE_DESIGN.md       # 7 MongoDB collections
-├── FRONTEND_DESIGN.md       # UI/UX design
-├── BACKEND_DESIGN.md        # API design
-└── MyJourney/
-    └── Day1.md             # File này
-
 flow9-backend/
 ├── src/
 │   ├── config/database.ts
@@ -185,8 +156,35 @@ flow9-backend/
 │   ├── cron/index.ts
 │   └── index.ts
 ├── .env
+├── README.md
 ├── package.json
 └── tsconfig.json
+```
 
-flow9-frontend/              # Đã có từ trước (Next.js + Tailwind)
+---
+
+## ✅ Kết quả
+
+- Backend compile và chạy thành công
+- Server chạy trên port 3001
+- MongoDB Atlas kết nối thành công
+- API tích hợp với frontend hoàn chỉnh
+- PIN 6 digits, NLP parser hoạt động
+- Subscriptions có payment history và mark as paid
+
+---
+
+## 🚀 Deploy
+
+### Backend Options
+- **Railway** (Khuyến nghị)
+- **Render**
+- **VPS**
+
+### Environment Variables cần thiết
+```env
+PORT=3001
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/flow9
+JWT_SECRET=your-secret-key
+FRONTEND_URL=https://your-frontend.vercel.app
 ```
