@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d968b",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#09090b",
+                        "zinc": {
+                            "700": "#3f3f46",
+                            "800": "#27272a",
+                            "900": "#18181b",
+                            "950": "#09090b",
+                        }
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-[240px] flex-shrink-0 border-r border-zinc-700 bg-zinc-950 flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="size-8 rounded bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white">account_balance_wallet</span>
+</div>
+<h1 class="font-bold text-lg tracking-tight">Flow9 Finance</h1>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-zinc-900 text-slate-400 hover:text-slate-100 transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-sm font-medium">Ledger</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-zinc-900 text-slate-400 hover:text-slate-100 transition-colors" href="#">
+<span class="material-symbols-outlined">event_repeat</span>
+<span class="text-sm font-medium">Subscriptions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-zinc-900 text-slate-400 hover:text-slate-100 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium">Payroll</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-zinc-900 text-slate-400 hover:text-slate-100 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-zinc-700">
+<div class="flex items-center gap-3 p-2 rounded-lg bg-zinc-900/50">
+<div class="size-8 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">person</span>
+</div>
+<div class="overflow-hidden">
+<p class="text-xs font-semibold truncate">Alex Nguyen</p>
+<p class="text-[10px] text-slate-500 truncate">Pro Account</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-background-dark no-scrollbar">
+<!-- Header -->
+<header class="h-16 flex items-center justify-between px-8 border-b border-zinc-700 sticky top-0 bg-background-dark/80 backdrop-blur-md z-10">
+<h2 class="text-xl font-bold">Dashboard Overview</h2>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-400 hover:text-slate-100 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                        Add Transaction
+                    </button>
+</div>
+</header>
+<div class="p-8 space-y-8">
+<!-- Top Row: Metric Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Income Card -->
+<div class="p-6 rounded-xl bg-zinc-900 border border-zinc-700 shadow-xl">
+<div class="flex justify-between items-start mb-4">
+<span class="text-slate-400 text-sm font-medium">Lương</span>
+<div class="p-2 rounded-lg bg-primary/10">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+</div>
+</div>
+<div class="space-y-1">
+<h3 class="text-2xl font-bold">15,000,000 VND</h3>
+<div class="flex items-center gap-1 text-primary text-sm font-medium">
+<span class="material-symbols-outlined text-sm">arrow_upward</span>
+<span>+12%</span>
+<span class="text-slate-500 font-normal ml-1">vs last month</span>
+</div>
+</div>
+</div>
+<!-- Expense Card -->
+<div class="p-6 rounded-xl bg-zinc-900 border border-zinc-700 shadow-xl">
+<div class="flex justify-between items-start mb-4">
+<span class="text-slate-400 text-sm font-medium">Chi tiêu</span>
+<div class="p-2 rounded-lg bg-red-500/10">
+<span class="material-symbols-outlined text-red-500">trending_down</span>
+</div>
+</div>
+<div class="space-y-1">
+<h3 class="text-2xl font-bold">4,250,000 VND</h3>
+<div class="flex items-center gap-1 text-red-500 text-sm font-medium">
+<span class="material-symbols-outlined text-sm">arrow_downward</span>
+<span>-5%</span>
+<span class="text-slate-500 font-normal ml-1">vs last month</span>
+</div>
+</div>
+</div>
+<!-- Subs Card -->
+<div class="p-6 rounded-xl bg-zinc-900 border border-zinc-700 shadow-xl">
+<div class="flex justify-between items-start mb-4">
+<span class="text-slate-400 text-sm font-medium">Subs</span>
+<div class="p-2 rounded-lg bg-amber-500/10">
+<span class="material-symbols-outlined text-amber-500">schedule</span>
+</div>
+</div>
+<div class="space-y-1">
+<h3 class="text-2xl font-bold">890,000 VND</h3>
+<div class="flex items-center gap-1 text-amber-500 text-sm font-medium">
+<span>3 due soon</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Middle Row: Charts -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Line Chart -->
+<div class="lg:col-span-2 p-6 rounded-xl bg-zinc-900 border border-zinc-700">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-bold">7-day Trend</h4>
+<select class="bg-zinc-800 border-zinc-700 text-xs rounded-lg p-1 outline-none">
+<option>This Week</option>
+<option>Last Week</option>
+</select>
+</div>
+<div class="h-64 flex flex-col justify-end">
+<div class="relative flex-1">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<defs>
+<lineargradient id="chartGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#0d968b" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#0d968b" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,80 Q10,75 20,85 T40,60 T60,40 T80,50 T100,20 L100,100 L0,100 Z" fill="url(#chartGradient)"></path>
+<path d="M0,80 Q10,75 20,85 T40,60 T60,40 T80,50 T100,20" fill="none" stroke="#0d968b" stroke-width="2"></path>
+</svg>
+<div class="absolute inset-0 flex justify-between items-end px-2">
+<span class="text-[10px] text-slate-500">Mon</span>
+<span class="text-[10px] text-slate-500">Tue</span>
+<span class="text-[10px] text-slate-500">Wed</span>
+<span class="text-[10px] text-slate-500">Thu</span>
+<span class="text-[10px] text-slate-500">Fri</span>
+<span class="text-[10px] text-slate-500">Sat</span>
+<span class="text-[10px] text-slate-500">Sun</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pie Chart Simulation -->
+<div class="p-6 rounded-xl bg-zinc-900 border border-zinc-700">
+<h4 class="font-bold mb-6">Top Categories</h4>
+<div class="flex items-center justify-center h-48 relative">
+<!-- SVG Circle Simulation -->
+<svg class="size-40 -rotate-90">
+<circle class="stroke-zinc-800 fill-none" cx="80" cy="80" r="70" stroke-width="12"></circle>
+<circle class="stroke-primary fill-none" cx="80" cy="80" r="70" stroke-dasharray="440" stroke-dashoffset="100" stroke-width="12"></circle>
+<circle class="stroke-amber-500 fill-none" cx="80" cy="80" r="70" stroke-dasharray="440" stroke-dashoffset="350" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="text-sm font-bold">Total</span>
+<span class="text-xs text-slate-500">Spending</span>
+</div>
+</div>
+<div class="mt-6 space-y-2">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-primary"></div>
+<span>Food &amp; Drinks</span>
+</div>
+<span class="font-semibold">65%</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-amber-500"></div>
+<span>Rent</span>
+</div>
+<span class="font-semibold">20%</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-zinc-700"></div>
+<span>Others</span>
+</div>
+<span class="font-semibold">15%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Transactions Table -->
+<div class="rounded-xl bg-zinc-900 border border-zinc-700 overflow-hidden">
+<div class="p-6 border-b border-zinc-700 flex justify-between items-center">
+<h4 class="font-bold">Recent Transactions</h4>
+<button class="text-primary text-xs font-semibold hover:underline">View All</button>
+</div>
+<div class="divide-y divide-zinc-700">
+<!-- Transaction Row 1 -->
+<div class="p-4 flex items-center justify-between hover:bg-zinc-800/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-lg bg-zinc-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400">restaurant</span>
+</div>
+<div>
+<p class="text-sm font-bold">Ăn trưa</p>
+<p class="text-[10px] text-slate-500">12:30 Today • Food</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-red-400">-50,000 VND</p>
+<p class="text-[10px] text-slate-500">Visa • **44</p>
+</div>
+</div>
+<!-- Transaction Row 2 -->
+<div class="p-4 flex items-center justify-between hover:bg-zinc-800/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">work</span>
+</div>
+<div>
+<p class="text-sm font-bold">Lương tháng</p>
+<p class="text-[10px] text-slate-500">09:00 Today • Income</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-primary">+15,000,000 VND</p>
+<p class="text-[10px] text-slate-500">Direct Deposit</p>
+</div>
+</div>
+<!-- Transaction Row 3 -->
+<div class="p-4 flex items-center justify-between hover:bg-zinc-800/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-lg bg-zinc-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400">shopping_cart</span>
+</div>
+<div>
+<p class="text-sm font-bold">Mua sữa</p>
+<p class="text-[10px] text-slate-500">18:20 Yesterday • Groceries</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-red-400">-45,000 VND</p>
+<p class="text-[10px] text-slate-500">Cash</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
